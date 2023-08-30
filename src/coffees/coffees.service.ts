@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Coffee } from './entities/coffee.entity';
+// import { CreateCoffeeDto } from './dto/create-coffee.dto/create-coffee.dto';
 
 @Injectable()
 export class CoffeesService {
@@ -25,6 +26,7 @@ export class CoffeesService {
     }
 
     create(createCoffeDto: any) {
+        // console.log(createCoffeDto instanceof CreateCoffeeDto);
         const originalCoffees = this.coffees;
         const size = this.coffees.length;
         
@@ -37,7 +39,7 @@ export class CoffeesService {
             const coffeeIndex = this.coffees.indexOf(existingCoffee);
             delete updateCoffeeDto.id;
 
-            this.coffees[coffeeIndex] = { id: Number(id), ...updateCoffeeDto };
+            this.coffees[coffeeIndex] = { id: Number(id), ...existingCoffee, ...updateCoffeeDto };
         }
     }
 
