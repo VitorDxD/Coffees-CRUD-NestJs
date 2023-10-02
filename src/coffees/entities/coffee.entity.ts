@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, JoinTable, ManyToMany } from "typeorm";
+import { Flavor } from "./flavor.entity";
 
 @Entity()  // Ao passar parametro,a tabela é renomeada. Ex.: ('coffees') 
 export class Coffee {
@@ -11,6 +12,13 @@ export class Coffee {
     @Column()
     brand: string;
 
-    @Column('json', { nullable: true })
-    flavors: string[];
+    @JoinTable()
+    @ManyToMany(
+        () => Flavor,
+        Flavor => Flavor.coffees,
+        {
+            cascade: true, // ['insert', 'update']
+        }
+    )
+    flavors: Flavor[];
 }
