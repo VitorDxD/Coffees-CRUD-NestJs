@@ -8,7 +8,10 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,    // Exibe apenas as propriedades inclusas no DTO.
     forbidNonWhitelisted: false,    // Gera um erro caso uma propriedade fora do DTO seja enviada.
-    transform: true    // Transforma o resultado em uma instância da classe do DTO.   
+    transform: true,    // Transforma o resultado em uma instância da classe do DTO.
+    transformOptions: {
+      enableImplicitConversion: true    // Se definido como verdadeiro, o transformador de classe tentará a conversão com base no tipo refletido de TS
+    }
   }));
   await app.listen(process.env.NODE_PORT || 3000);
 }

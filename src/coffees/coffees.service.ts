@@ -15,11 +15,14 @@ export class CoffeesService {
         private readonly flavorRepository: Repository<Flavor>
     ) {}
 
-    findAll() {
+    findAll(paginationQuery) {
+        const { offset, limit } = paginationQuery
         return this.coffeeRepository.find({
             relations: {
                 flavors: false
-            }
+            },
+            skip: offset,
+            take: limit
         });
     }
 
